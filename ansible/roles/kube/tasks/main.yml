@@ -1,2 +1,21 @@
 ---
-# tasks file for roles/kube
+# tasks file for roles/upl-kube
+- name: configure networking
+  include_tasks: configure-networking.yml
+
+- name: add kubernetes repo
+  include_tasks: add-kubernetes-repo.yml
+  when: ansible_os_family == "Debian"
+  
+- name: install kubernetes
+  include_tasks: install-kubernetes.yml
+  when: ansible_os_family == "Debian"
+
+- name: install helm
+  include_tasks: install-helm.yml
+
+- name: configure crictl
+  include_tasks: configure-crictl.yml
+
+- name: configure kubernetes
+  include_tasks: configure-kubernetes.yaml

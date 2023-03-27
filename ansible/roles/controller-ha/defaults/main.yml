@@ -1,2 +1,13 @@
 ---
 # defaults file for roles/controller-ha
+haproxy_version: 2.2.14
+keepalived_version: 2.0.20
+
+apiserver_src_port: 6443
+apiserver_dest_port: 8443
+
+pod_subnet: 10.244.0.0/16
+
+keepalived_interface: enp0s3
+keepalived_router_id: 51
+keepalived_auth_pass: uplkeepalived

@@ -1,0 +1,16 @@
+---
+- name: Toolkit Router [base]
+  hosts: router
+  roles:
+    - base
+
+- name: Toolkit Router [virtualbox]
+  hosts: router
+  roles:
+    - role: virtualbox
+      when: virtualbox | Bool
+
+- name: Toolkit Router [router]
+  hosts: router
+  roles:
+    - router

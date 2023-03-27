@@ -1,0 +1,9 @@
+---
+- name: configure kubeadm
+  become: true
+  ansible.builtin.template:
+    src: kubeadm-init.yaml.j2
+    dest: /etc/kubernetes/kubeadm-init.yaml
+    owner: root
+    group: root
+    mode: 0755

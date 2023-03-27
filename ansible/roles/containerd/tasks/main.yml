@@ -1,2 +1,11 @@
 ---
-# tasks file for roles/containerd
+# tasks file for roles/upl-containerd
+- name: Add docker repo
+  include_tasks: apt-docker-repo.yml
+  when: ansible_os_family == "Debian" and container_runtime == "containerd"
+- name: install containerd
+  include_tasks: install-containerd.yml
+  when: ansible_os_family == "Debian" and container_runtime == "containerd"
+- name: configure containerd
+  include_tasks: configure-containerd.yml
+  when: container_runtime == 'containerd'

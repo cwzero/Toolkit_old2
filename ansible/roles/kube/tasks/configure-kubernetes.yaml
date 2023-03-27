@@ -1,0 +1,13 @@
+---
+- name: disable swap
+  when: install_kubelet | bool
+  become: true
+  command: swapoff -a
+
+- name: disable swap in fstab
+  when: install_kubelet | bool
+  become: true
+  replace:
+    path: /etc/fstab
+    regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
+    replace: '# \1'

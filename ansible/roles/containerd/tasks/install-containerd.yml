@@ -1,0 +1,8 @@
+---
+- name: install containerd
+  when: container_runtime == 'containerd'
+  become: true
+  ansible.builtin.apt:
+    name: containerd.io
+    state: present
+    update_cache: yes

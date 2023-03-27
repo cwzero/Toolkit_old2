@@ -1,0 +1,40 @@
+---
+- name: update cache
+  become: true
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: install kubectl
+  when: install_kubectl | bool
+  become: true
+  ansible.builtin.apt:
+    name: kubectl={{ kubernetes_version }}-00
+    state: present
+
+- name: install kubeadm
+  when: install_kubeadm | bool
+  become: true
+  ansible.builtin.apt:
+    name: kubeadm={{ kubernetes_version }}-00
+    state: present
+
+- name: install kubelet
+  when: install_kubelet | bool
+  become: true
+  ansible.builtin.apt:
+    name: kubelet={{ kubernetes_version }}-00
+    state: present
+
+- name: install kubernetes-cni
+  when: install_kubernetes_cni | bool
+  become: true
+  ansible.builtin.apt:
+    name: kubernetes-cni={{ kubernetes_cni_version }}-00
+    state: present
+
+- name: install cri-tools
+  when: install_cri_tools | bool
+  become: true
+  ansible.builtin.apt:
+    name: cri-tools={{ cri_tools_version }}-00
+    state: present

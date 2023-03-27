@@ -1,6 +1,27 @@
 ---
-- name: Toolkit Dev
+- name: Toolkit Dev [base]
+  hosts: dev
+  roles:
+    - base
+
+- name: Toolkit Dev [virtualbox]
+  hosts: dev
+  roles:
+    - role: virtualbox
+      when: virtualbox | Bool
+
+- name: Toolkit Dev [containerd]
+  hosts: dev
+  roles:
+    - role: containerd
+      when: container_runtime == "containerd"
+
+- name: Toolkit Dev [kube]
   hosts: dev
   roles:
     - kube
+
+- name: Toolkit Dev [dev]
+  hosts: dev
+  roles:
     - dev

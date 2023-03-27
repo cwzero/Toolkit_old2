@@ -1,0 +1,43 @@
+---
+- name: create containerd config directory
+  when: container_runtime == 'containerd'
+  become: true
+  ansible.builtin.file:
+    path: /etc/containerd
+    state: directory
+
+- name: create containerd config file
+  when: container_runtime == 'containerd'
+  become: true
+  ansible.builtin.shell: containerd config default > /etc/containerd/config.toml
+
+#- name: configure containerd
+#  when: container_runtime == 'containerd'
+#  become: true
+#  ansible.builtin.copy:
+#    src: containerd-config.toml
+#    dest: /etc/containerd/config.toml
+
+#- name: set systemd cgroup
+#  when: container_runtime == 'containerd'
+#  become: true
+#  ansible.builtin.lineinfile:
+#    path: /etc/containerd/config.toml
+#    regexp: '    systemd_cgroup \= .*'
+#    line: '    systemd_cgroup = true'
+
+- name: set systemd cgroup [2]
+  when: container_runtime == 'containerd'
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/containerd/config.toml
+    regexp: '            SystemdCgroup \= .*'
+    line: '            SystemdCgroup = true'
+
+- name: restart containerd
+  when: container_runtime == 'containerd'
+  become: true
+  ansible.builtin.service:
+    name: containerd
+    state: restarted
+    enabled: yes

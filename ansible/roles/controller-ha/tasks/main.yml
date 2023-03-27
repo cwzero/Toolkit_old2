@@ -1,2 +1,8 @@
 ---
 # tasks file for roles/controller-ha
+- name: configure haproxy
+  include_tasks: configure-haproxy.yml
+- name: configure keepalived
+  include_tasks: configure-keepalived.yml
+- name: configure kubeadm
+  include_tasks: configure-kubeadm.yml

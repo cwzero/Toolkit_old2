@@ -1,0 +1,27 @@
+---
+- name: Toolkit Kube Worker [base]
+  hosts: worker
+  roles:
+    - base
+
+- name: Toolkit Kube Worker [virtualbox]
+  hosts: worker
+  roles:
+    - role: virtualbox
+      when: virtualbox | Bool
+
+- name: Toolkit Kube Worker [containerd]
+  hosts: worker
+  roles:
+    - role: containerd
+      when: container_runtime == "containerd"
+
+- name: Toolkit Kube Worker [kube]
+  hosts: worker
+  roles:
+    - kube
+
+- name: Toolkit Kube Worker [worker]
+  hosts: worker
+  roles:
+    - worker

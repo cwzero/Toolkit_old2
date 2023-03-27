@@ -1,0 +1,13 @@
+---
+- name: install helm
+  become: true
+  ansible.builtin.unarchive:
+    src: "{{ helm_download_url }}"
+    dest: "{{ helm_install_dir }}"
+    extra_opts:
+      - --strip=1
+      - --wildcards
+      - '*/helm'
+    remote_src: true
+    creates: "{{ helm_install_dir }}/helm"
+  when: install_helm

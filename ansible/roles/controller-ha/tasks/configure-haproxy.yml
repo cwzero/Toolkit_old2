@@ -1,0 +1,39 @@
+---
+- name: create haproxy directory
+  become: true
+  ansible.builtin.file:
+    path: /etc/haproxy
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+- name: copy haproxy conf
+  become: true
+  ansible.builtin.template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: 0755
+#- name: install haproxy
+#  apt:
+#    name: haproxy
+#    state: present
+#- name: enable haproxy
+#  systemd:
+#    name: haproxy
+#    enabled: true
+#    state: started
+- name: create manifests directory
+  become: true
+  ansible.builtin.file:
+    dest: /etc/kubernetes/manifests
+    state: directory
+- name: copy haproxy manifest
+  become: true
+  ansible.builtin.template:
+    src: manifests/haproxy.yaml.j2
+    dest: /etc/kubernetes/manifests/haproxy.yaml
+    owner: root
+    group: root
+    mode: 0755

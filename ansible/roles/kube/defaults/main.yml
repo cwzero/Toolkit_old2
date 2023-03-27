@@ -1,2 +1,19 @@
 ---
 # defaults file for roles/kube
+kubernetes_version: 1.26.3
+kubernetes_cni_version: 1.2.0
+cri_tools_version: 1.26.0
+helm_version: 3.11.2
+
+helm_download_url: "https://get.helm.sh/helm-v{{ helm_version }}-linux-amd64.tar.gz"
+helm_checksum: sha256:bca0c5b99a0e6621032f1767e61a1723b86c5f4ef565fa58be8be6d619a4276a
+helm_install_dir: "/usr/local/bin"
+
+container_runtime: none
+
+install_kubectl: true
+install_kubeadm: false
+install_kubelet: false
+install_kubernetes_cni: false
+install_cri_tools: false
+install_helm: false

@@ -1,0 +1,59 @@
+---
+- name: create module directory
+  when: install_kubelet | bool
+  become: true
+  ansible.builtin.file:
+    path: /etc/modules-load.d
+    state: directory
+
+- name: create kubernetes module config file
+  when: install_kubelet | bool
+  become: true
+  ansible.builtin.file:
+    path: /etc/modules-load.d/kubernetes.conf
+    state: touch
+
+- name: enable overlay
+  when: install_kubelet | bool
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/modules-load.d/kubernetes.conf
+    line: 'overlay'
+- name: enable netfilter
+  when: install_kubelet | bool
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/modules-load.d/kubernetes.conf
+    line: 'br_netfilter'
+- name: enable modules
+  when: install_kubelet | bool
+  become: true
+  ansible.builtin.shell: |
+    modprobe overlay
+    modprobe br_netfilter
+
+- name: enable bridge-nf-call-iptables
+  when: install_kubelet | bool
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/sysctl.conf
+    regexp: '^#?net.bridge.bridge-nf-call-iptables = .*'
+    line: 'net.bridge.bridge-nf-call-iptables = 1'
+- name: enable bridge-nf-call-ip6tables
+  when: install_kubelet | bool
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/sysctl.conf
+    regexp: '^#?net.bridge.bridge-nf-call-ip6tables = .*'
+    line: 'net.bridge.bridge-nf-call-ip6tables = 1'
+- name: enable ip_forward
+  when: install_kubelet | bool
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/sysctl.conf
+    regexp: '^#?net.ipv4.ip_forward = .*'
+    line: 'net.ipv4.ip_forward = 1'
+- name: reload sysctl
+  when: install_kubelet | bool
+  become: true
+  ansible.builtin.command: sysctl -p

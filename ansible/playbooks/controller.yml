@@ -1,5 +1,27 @@
 ---
-- name: Toolkit Kube Controllers
+- name: Toolkit Kube Controller [base]
+  hosts: controller
+  roles:
+    - base
+
+- name: Toolkit Kube Controller [virtualbox]
+  hosts: controller
+  roles:
+    - role: virtualbox
+      when: virtualbox | Bool
+
+- name: Toolkit Kube Controller [containerd]
+  hosts: controller
+  roles:
+    - role: containerd
+      when: container_runtime == "containerd"
+
+- name: Toolkit Kube Controller [kube]
+  hosts: controller
+  roles:
+    - kube
+
+- name: Toolkit Kube Controller [controller]
   hosts: controller
   roles:
     - controller

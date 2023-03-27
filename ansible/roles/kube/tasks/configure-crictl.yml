@@ -1,0 +1,22 @@
+---
+- name: create crictl config file
+  become: true
+  ansible.builtin.file:
+    path: /etc/crictl.yaml
+    state: touch
+
+- name: configure crictl runtime endpoint - containerd
+  when: container_runtime == 'containerd'
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/crictl.yaml
+    regexp: '^runtime-endpoint: .*'
+    line: 'runtime-endpoint: unix:///run/containerd/containerd.sock'
+
+- name: configure crictl image endpoint - containerd
+  when: container_runtime == 'containerd'
+  become: true
+  ansible.builtin.lineinfile:
+    path: /etc/crictl.yaml
+    regexp: '^image-endpoint: .*'
+    line: 'image-endpoint: unix:///run/containerd/containerd.sock'

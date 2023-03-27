@@ -1,0 +1,50 @@
+---
+- name: create /etc/keepalived
+  become: true
+  ansible.builtin.file:
+    path: /etc/keepalived
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+- name: copy keepalived conf
+  become: true
+  ansible.builtin.template:
+    src: keepalived.conf.j2
+    dest: /etc/keepalived/keepalived.conf
+    owner: root
+    group: root
+    mode: 0644
+- name: copy check_apiserver script
+  become: true
+  ansible.builtin.template:
+    src: check_apiserver.sh.j2
+    dest: /etc/keepalived/check_apiserver.sh
+    owner: root
+    group: root
+    mode: 0755
+#- name: install keepalived
+#  apt:
+#    name: keepalived
+#    state: present
+#- name: enable keepalived
+#  systemd:
+#    name: keepalived
+#    enabled: true
+#    state: started
+- name: create manifests directory
+  become: true
+  ansible.builtin.file:
+    dest: /etc/kubernetes/manifests
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+- name: copy keepalived manifest
+  become: true
+  ansible.builtin.template:
+    src: manifests/keepalived.yaml.j2
+    dest: /etc/kubernetes/manifests/keepalived.yaml
+    owner: root
+    group: root
+    mode: 0755
