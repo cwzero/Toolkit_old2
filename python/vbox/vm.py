@@ -59,3 +59,5 @@ class vm(object):
     return vbox.guestcontrol(self.vmname, args)
   def metrics(self, args):
     return vbox.metrics(self.vmname, args)
+  def stop(self):
+    return vbox.controlvm(self.vmname, ['shutdown'])

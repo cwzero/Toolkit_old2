@@ -1,0 +1,8 @@
+apiVersion: ceph.rook.io/v1
+kind: CephObjectStoreUser
+metadata:
+  name: toolkit
+  namespace: rook-ceph
+spec:
+  store: toolkit-store
+  displayName: "Toolkit Storage User"

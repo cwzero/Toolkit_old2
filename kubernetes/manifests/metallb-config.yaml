@@ -1,0 +1,29 @@
+---
+apiVersion: metallb.io/v1beta1
+kind: IPAddressPool
+metadata:
+  name: toolkit-default-pool
+  namespace: metallb-system
+spec:
+  addresses:
+  - 10.245.0.2-10.245.255.254
+  autoAssign: false
+---
+apiVersion: metallb.io/v1beta1
+kind: BGPAdvertisement
+metadata:
+  name: toolkit-default-advertisement
+  namespace: metallb-system
+spec:
+  ipAddressPools:
+  - toolkit-default-pool
+---
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: toolkit-router
+  namespace: metallb-system
+spec:
+  myASN: 64601
+  peerASN: 64600
+  peerAddress: 10.0.0.1
