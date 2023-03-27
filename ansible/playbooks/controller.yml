@@ -1,0 +1,6 @@
+---
+- name: Toolkit Kube Controllers
+  hosts: controller
+  roles:
+    - controller
+    - controller-ha

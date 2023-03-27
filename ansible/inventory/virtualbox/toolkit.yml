@@ -1,8 +1,10 @@
 all:
   children:
-    toolbox:
+    toolkit:
       vars:
+        virtualbox: true
         ansible_user: eric
+        kubernetes_address: 10.10.0.2
       children:
         network:
           hosts:

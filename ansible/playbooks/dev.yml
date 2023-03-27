@@ -1,0 +1,6 @@
+---
+- name: Toolkit Dev
+  hosts: dev
+  roles:
+    - kube
+    - dev
