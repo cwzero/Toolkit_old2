@@ -5,4 +5,4 @@
 - We then use a set of ansible roles to bootstrap kubernetes, found in ansible/.
 - The python scripts boot a vyos router and a set of ubuntu control/worker nodes.
 - We have a private network controlled by the vyos router that can use nat to access our actual network.
-- We use addons for kubernetes including MetalLB for load balancing, and rook for storage.
+- We use addons for kubernetes including MetalLB for load balancing, and rook for storage. These are configured in the kubernetes/ folder.
